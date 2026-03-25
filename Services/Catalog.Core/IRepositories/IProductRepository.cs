@@ -1,6 +1,6 @@
 ﻿using Catalog.Core.Entities;
 
-namespace Catalog.Core.Repositories;
+namespace Catalog.Core.IRepositories;
 
 public interface IProductRepository
 {
@@ -8,10 +8,12 @@ public interface IProductRepository
     Task<Product> GetProductById(string id);
 
     Task<IEnumerable<Product>> GetProductsByName(string name);
-    Task<IEnumerable<Product>> GetProductsByTypeId(string typeId);
 
     Task<IEnumerable<Product>> GetProductsByBrand(string brand);
     Task<IEnumerable<Product>> GetProductsByBrandId(string brandId);
+
+    Task<IEnumerable<Product>> GetProductsByTypeId(string typeId);
+    Task<IEnumerable<Product>> GetProductsByType(string type);
 
     Task<bool> UpdateProduct(Product product);
     Task<bool> DeleteProduct(string id);
