@@ -1,10 +1,14 @@
 ﻿using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
+using Catalog.Infrastructure.Data;
+using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Repositories;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository(ICatalogContext context) : IProductRepository
 {
+    private readonly ICatalogContext _context = context;
+
     public Task<bool> DeleteProduct(string id)
     {
         throw new NotImplementedException();
@@ -15,14 +19,14 @@ public class ProductRepository : IProductRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<Product>> GetAllProducts()
+    public async Task<IEnumerable<Product>> GetAllProducts()
     {
-        throw new NotImplementedException();
+        return await _context.Products.Find(x => true).ToListAsync();
     }
 
-    public Task<Product> GetById(string id)
+    public async Task<Product> GetProductById(string id)
     {
-        throw new NotImplementedException();
+        return await _context.Products.Find(x => x.Id == id).FirstOrDefaultAsync();
     }
 
     public Task<IEnumerable<Product>> GetProductsByBrand(string brand)
